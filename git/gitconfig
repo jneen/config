@@ -1,0 +1,108 @@
+[core]
+	# this is my editor.  replace with your editor of choice.
+  editor = ~/.config/nvim/editor.sh
+
+	# set up the global gitignore
+	# (mine has vim swap files, /tmp, etc)
+	excludesfile = ~/.gitignore
+
+	# don't remember exactly what this does, but it's something
+	# fancy with auto-converting windows line endings.
+	autocrlf = input
+[init]
+  templatedir = ~/.git_template
+[url "git@github.com:"]
+	insteadOf = gh:
+[url "git@gitlab.com:"]
+	insteadOf = gl:
+[user]
+	name = http://jneen.net/
+	email = jneen@jneen.net
+	signingkey = jneen@jneen.net
+[github]
+	user = jneen
+	token = "<redacted>"
+[pivotal]
+	api-token = "<redacted>"
+[color]
+	# turn on colors when stdout is a terminal
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[merge]
+	# this is absolutely necessary, imo.  Makes `git merge` with no
+	# arguments merge with its upstream (usefull with the ff alias)
+	defaultToUpstream = true
+
+	# show the state of the common parent in merge conflicts
+	conflictStyle = diff3
+[push]
+	# absolutely necessary!  only push the current branch to upstream.
+	# this makes pull and push symmetrical, and otherwise git tries
+	# to do fancy things with branch names, which makes no sense.
+	default = upstream
+[alias]
+	co = checkout
+
+	rs = reset
+
+	fuckit = reset --hard @{u}
+
+	# always pass the -v flag (shows the diff in your editor)
+	# (also I never pass -m, because I want to be able to see
+	# how long the message is)
+	ci = commit -v
+	c  = commit -v
+
+	# extra-useful version of status
+	st = status -sb
+	s  = status -sb
+
+	b = branch
+	br = branch -vv
+
+	d = diff
+	# diff --cached is the diff between the index and HEAD -
+	# i.e. what you are about to commit.
+	dc = diff --cached
+
+	a  = add
+	# interactive adding of parts of files
+	ap = add --patch
+	ae = add --edit
+
+	ps = push
+	fe = fetch
+
+	sh = stash
+
+	# fast-forward - won't make a merge commit, instead will
+	# only change branch pointers
+	ff = merge --ff-only
+	# merge-commit - will always make a merge commit
+	mc = merge --no-ff
+
+	rr = rebase
+
+	real-name = rev-parse --abbrev-ref --symbolic-full-name
+	current-branch = rev-parse --abbrev-ref --symbolic-full-name HEAD
+	current-upstream = rev-parse --abbrev-ref --symbolic-full-name @{u}
+
+	# fancy log
+	lg = log --decorate --graph --date=relative
+	# fancy "big-picture" log
+	l  = log --decorate --graph --date=relative --oneline
+
+	# i don't know why this isn't called ls
+	ls = ls-files
+
+	# print the root directory of this repo
+	root = rev-parse --show-toplevel
+
+	# print the hash of the current revision
+	head = rev-parse HEAD
+
+	show-old = "!_() { git show :1:\"$1\"; }; _"
+	show-new = "!_() { git show :3:\"$1\"; }; _"
+	show-mine = "!_() { git show :2:\"$1\"; }; _"

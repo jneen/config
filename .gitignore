@@ -1,0 +1,4 @@
+/direnv/allow/*
+/nvim/bundle/*
+/nvim/.netrwhist
+/configstore/*.json
