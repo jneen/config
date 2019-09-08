@@ -25,11 +25,11 @@ export SHELL=/usr/local/bin/bash
 shell() { exec "$SHELL" "$@"; }
 
 bootstrap() {
-  execd ln -sf .config/git/gitconfig ~/.gitconfig
+  execd ln -shf .config/git/gitconfig ~/.gitconfig
 
-  execd ln -sf .config/nvim ~/.vim
-  execd ln -sf .config/nvim/nvim.sh ~/.vimrc
+  execd ln -shf .config/nvim ~/.vim
+  execd ln -shf .config/nvim/nvim.sh ~/.vimrc
 
-  execd ln -sf .config/bash/init.sh ~/.bashrc
+  execd ln -shf .config/bash/init.sh ~/.bashrc
   execd echo '. "$HOME"/.bashrc' > ~/.bash_profile
 }
