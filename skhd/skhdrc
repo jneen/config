@@ -99,6 +99,14 @@ ctrl + alt - 1  : yabai -m display --focus 1
 ctrl + alt - 2  : yabai -m display --focus 2
 ctrl + alt - 3  : yabai -m display --focus 3
 
+alt - w : yabai -m display --focus 1
+alt - e : yabai -m display --focus 2
+alt - r : yabai -m display --focus 3
+
+alt + shift - w : yabai -m space --display 1 && yabai -m display --focus 1
+alt + shift - e : yabai -m space --display 2 && yabai -m display --focus 2
+alt + shift - r : yabai -m space --display 3 && yabai -m display --focus 3
+
 # send window to monitor and follow focus
 ctrl + cmd - x  : yabai -m window --display recent; yabai -m display --focus recent
 ctrl + cmd - z  : yabai -m window --display prev; yabai -m display --focus prev
@@ -156,7 +164,7 @@ shift + alt - f : yabai -m window --toggle native-fullscreen
 shift + alt - b : yabai -m window --toggle border
 
 # toggle window split type
-alt - e : yabai -m window --toggle split
+# alt - e : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
 alt - t : yabai -m window --toggle float;\

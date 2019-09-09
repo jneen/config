@@ -28,6 +28,10 @@ let g:suda_startup = 1
 " for the CtrlP plugin, which is a fuzzy file finder
 let g:ctrlp_working_path_mode = '0'
 
+augroup FiletypeBehavior
+  au BufRead,BufNewFile gitconfig set filetype=gitconfig
+augroup END
+
 " load plugins.
 " turn syntax highlighting off while we load plugins,
 " otherwise some bugs can happen
@@ -172,6 +176,7 @@ noremap <silent> <Leader>fs :<C-u>Wall<cr><Esc>:<C-u>noh<cr>
 noremap <silent> <Leader>fS :w<cr>:noh<cr>
 " fe = file edit, for editing specific files that i'm always opening
 noremap <silent> <Leader>fed :e ~/.config/nvim/init.vim<cr>
+noremap <silent> <Leader>fep :e ~/.config/nvim/plug.vim<cr>
 noremap <silent> <Leader>feR :so ~/.config/nvim/init.vim<cr>
 noremap <silent> <Leader>feg :e ~/.gitconfig<cr>
 noremap <silent> <Leader>fet :e ~/tmp/todo<cr>

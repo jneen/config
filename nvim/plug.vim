@@ -7,6 +7,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
 
 Plug 'lambdalisue/suda.vim'
 

@@ -4,7 +4,7 @@
 
 	# set up the global gitignore
 	# (mine has vim swap files, /tmp, etc)
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.config/git/gitignore
 
 	# don't remember exactly what this does, but it's something
 	# fancy with auto-converting windows line endings.
