@@ -2,3 +2,12 @@
 /nvim/bundle/*
 /nvim/.netrwhist
 /configstore/*.json
+
+# just in case
+*[cC]ache*
+
+/discord
+/dconf
+/jack
+/pulse
+/Slack
