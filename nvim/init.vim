@@ -8,7 +8,7 @@
 
 " ==================== plugins ===================
 
-set shell=/usr/local/bin/bash
+set shell="/usr/bin/bash -l"
 " using the "Ack" plugin but actually using the "ag"
 " program, to find patterns in a project
 " :Ack some.*pattern
@@ -36,7 +36,7 @@ augroup END
 " turn syntax highlighting off while we load plugins,
 " otherwise some bugs can happen
 filetype off
-source ~/.vim/plug.vim
+source ~/.config/nvim/plug.vim
 filetype plugin indent on
 syntax on
 
@@ -253,6 +253,7 @@ noremap <silent> <Leader>sm :make<cr>
 noremap <silent> <Leader>sb <C-w>s:terminal bash %<cr>
 noremap <silent> <Leader>s. :so %<cr>
 noremap <silent> <Leader>se <C-w>s:terminal bash -c %<cr>
+noremap <silent> <Leader>sx <C-w>s:terminal xmodmap %<cr>
 
 " use double-escape to go to terminal-normal mode
 tnoremap <silent> <Esc><Esc> <C-\><C-n>
