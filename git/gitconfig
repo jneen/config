@@ -43,7 +43,10 @@
 	# to do fancy things with branch names, which makes no sense.
 	default = upstream
 [alias]
-	co = checkout
+	# co = checkout
+
+	re = restore
+	sw = switch
 
 	rs = reset
 
