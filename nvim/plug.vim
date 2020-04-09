@@ -10,6 +10,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 
 Plug 'lambdalisue/suda.vim'
+" Plug 'chrisbra/SudoEdit.vim'
 
 Plug 'mileszs/ack.vim'
 Plug 'michaeljsmith/vim-indent-object'

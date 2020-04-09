@@ -8,7 +8,7 @@
 
 " ==================== plugins ===================
 
-set shell="/usr/bin/bash -l"
+set shell=/usr/bin/bash\ -il
 " using the "Ack" plugin but actually using the "ag"
 " program, to find patterns in a project
 " :Ack some.*pattern
@@ -155,7 +155,7 @@ noremap <Leader>ga :!git add %<cr>
 
 " >> sudo (using the Suda plugin)
 noremap <silent> <Leader>se :noh<cr>:e suda://%<cr>
-noremap <silent> <Leader>sfs :noh<cr>:SudoWrite<cr>
+noremap <silent> <Leader>sfs :noh<cr>:w suda://%<cr>
 
 " >> files
 " open cwd in the file explorer
