@@ -40,15 +40,22 @@ bootstrap-global() {
   execd $ln .config/bash/init.sh ~/.bashrc
   execd echo '. "$HOME"/.bashrc' > ~/.bash_profile
 
+  execd mkdir -p ~/.cache/vim/undo/
+  execd mkdir -p ~/.cache/vim/swap/
+  execd mkdir -p ~/.cache/vim/backup/
 
 }
 
 bootstrap-linux() {
   local ln="ln -snf"
+  execd dconf dump /org/gnome/terminal/ | fgrep -q 'Thankful Eyes' || {
+    execd bash ~/.config/gnome-terminal/thankful-eyes.sh
+  }
   bootstrap-global
   execd $ln ~/.config/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
   execd $ln ~/.config/uim ~/.uim.d
-  execd bash ~/.config/gnome-terminal/thankful-eyes.sh
+  execd $ln ~/.config/x/xinitrc ~/.xinitrc
+  execd mkdir -p ~/Screenshots
 }
 
 bootstrap-mac() {

@@ -4,7 +4,6 @@ export JACK_IN="$HOME/.local/run/jack/in"
 export JACK_OUT="$HOME/.local/run/jack/out"
 
 audio-cleanup() {
-echo audio-cleanup >> /tmp/audio-cleanup
   local playback="$1"; shift
   [[ -z "$playback" ]] && playback="$(cat "$JACK_OUT")"
 
@@ -16,6 +15,19 @@ echo audio-cleanup >> /tmp/audio-cleanup
 
   [[ -s "$in_pf" ]] && echo "killing in proc $(cat "$in_pf") from $in_pf" >&2 && kill "$(cat "$in_pf")" && rm -f "$in_pf"
   [[ -s "$out_pf" ]] && echo "killing out proc $(cat "$out_pf") from $out_pf" >&2 && kill "$(cat "$out_pf")" && rm -f "$out_pf"
+}
+
+pulse-connect() {
+  local dir="$1"; shift
+  local jack_name="$1"; shift
+  local pulse_name="$1"; shift
+
+  pactl list "$dir"s | grep -q "Name: $pulse_name" || {
+    pactl load-module module-jack-"$dir" \
+      channels=2 client_name="$jack_name" \
+      "$dir"_name="$pulse_name" \
+      "$@"
+  }
 }
 
 audio-setup() {
@@ -31,13 +43,11 @@ audio-setup() {
   jack_control ds dummy
   jack_control sm || return $?
 
-  pulseaudio --start
+  pactl info || pulseaudio --start
 
-  pactl unload-module module-jack-source
-  pactl unload-module module-jack-sink
-
-  pactl load-module module-jack-source channels=2
-  pactl load-module module-jack-sink channels=2
+  pulse-connect sink pulse_sink jack_sink
+  pulse-connect source pulse_source jack_source
+  pulse-connect source pulse_monitor jack_monitor
 
   local inslug="input-${capture/:/_}"
   local outslug="output-${playback/:/_}"
@@ -61,40 +71,49 @@ audio-setup() {
 }
 
 patch_capture() {
-  local i=0
   local cap
-  local jacksource="$(cat "$JACK_IN")"
-  jacksource="input-${jacksource/:/_}"
+  local jacksource="$1"; shift
 
-  while read cap; do
-    i=$(($i + 1))
-    echo jack_connect "$cap" "$jacksource:capture_$i" >&2
-    jack_connect "$cap" "$jacksource:capture_$i"
+  [[ -z "$jacksource" ]] && {
+    jacksource="$(cat "$JACK_IN")"
+    jacksource="input-${jacksource/:/_}"
+  }
+
+  putd jacksource
+  paste - <(jack_lsp | grep "$jacksource" | sort) \
+    | while read cap source; do
+    [[ -z "$cap$source" ]] && break
+    execd jack_connect "$source" "$cap"
   done
 }
 
 patch_playback() {
-  local i=0
   local play
-  local jacksink="$(cat "$JACK_OUT")"
-  jacksink="output-${jacksink/:/_}"
+  local jacksink="$1"; shift
 
-  while read play; do
-    i=$(($i + 1))
-    echo jack_connect "$play" "$jacksink:playback_$i" >&2
-    jack_connect "$play" "$jacksink:playback_$i"
+  [[ -z "$jacksink" ]] && {
+    jacksink="$(cat "$JACK_OUT")"
+    jacksink="output-${jacksink/:/_}"
+  }
+
+  putd jacksink
+  paste - <(jack_lsp | grep "$jacksink" | sort) \
+    | while read play sink; do
+    [[ -z "$play$sink" ]] && break
+    execd jack_connect "$play" "$sink"
   done
 }
 
 
 patch_pulse() {
-  jack_lsp | grep PulseAudio | grep Source | patch_capture
-  jack_lsp | grep PulseAudio | grep Sink | patch_playback
+  jack_lsp | grep pulse_source | patch_capture
+  jack_lsp | grep pulse_sink | patch_playback
 }
 
 patch_renoise() {
   jack_lsp | fgrep renoise:output | patch_playback
   jack_lsp | fgrep renoise:input  | patch_capture
+  jack_lsp | fgrep renoise:output | patch_capture pulse_monitor
 }
 
 patch_bitwig() {
@@ -116,19 +135,20 @@ speaker() {
   amixer -D hw:PCH sset Speaker on
 }
 
-btc() { bluetoothctl "$@" ;}
-btheadphones() {
-  # ALSA_OUT_OPTS='-p 1066 -n 9 -c 2 -t 0' audio-setup bluealsa "$@"
+# TODO: bluetooth, setup with pulse, hooked to jack applications through the "monitor" connection to pulse
+# btc() { bluetoothctl "$@" ;}
+# btheadphones() {
+#   # ALSA_OUT_OPTS='-p 1066 -n 9 -c 2 -t 0' audio-setup bluealsa "$@"
+# 
+#   # 2400 samples * 2 channels * 10 periods = 48000
+#   # ALSA_OUT_OPTS='-p 1024 -n 9 -c 2 -t 0' audio-setup bluealsa "$@"
+#   ALSA_OPTS='-c 2 -t 0 -v -n 9' audio-setup bluealsa "$@"
+#   # audio-setup bluealsa "$@"
+# }
 
-  # 2400 samples * 2 channels * 10 periods = 48000
-  # ALSA_OUT_OPTS='-p 1024 -n 9 -c 2 -t 0' audio-setup bluealsa "$@"
-  ALSA_OPTS='-c 2 -t 0 -v -n 9' audio-setup bluealsa "$@"
-  # audio-setup bluealsa "$@"
-}
-
-bconnect() {
-  echo power on | btc
-  sys restart bluealsa
-  (echo connect 70:26:05:3A:AE:DC; sleep 5) | btc && \
-  btheadphones
-}
+# bconnect() {
+#   echo power on | btc
+#   sys restart bluealsa
+#   (echo connect 70:26:05:3A:AE:DC; sleep 5) | btc && \
+#   btheadphones
+# }

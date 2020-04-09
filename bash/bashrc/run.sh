@@ -1,7 +1,10 @@
 #!/bin/bash
 
 current-desktop() {
-  echo $((1 + $(xdotool get_desktop)))
+  desktop="$(xdotool get_desktop 2>/dev/null)"
+  [[ $? != 0 ]] && desktop=0 # first boot
+  # get_desktop can fail if we've never switched desktops
+  echo $((1 + $desktop))
 }
 
 register-sticky() {
@@ -49,6 +52,6 @@ is-interactive && {
 startapps() {
   run-on 1 br
   run-on 8 slack
-  run-on 8 discord
+  run-on 7 discord
   exit
 }
