@@ -1,0 +1,48 @@
+#!/bin/bash
+
+export LANG=en_CA.UTF-8
+export LC_TIME=en_GB.UTF-8
+export PATH="~/.local/bin:$PATH"
+
+xrdb -merge ~/.config/x/Xresources
+xmodmap ~/.config/x/xmodmap
+
+# bay area
+# LAT=34.2110; LON=-118.4689
+
+# tokyo
+# LAT=35.6895; LON=139.6917
+
+# toronto
+LAT=43.6532; LON=-79.3832
+
+# genova
+# LAT=44.405647; LON=8.938214
+
+xflux -l "$LAT" -g "$LON" 2>&1 | logger -t xflux &
+
+export GTK_IM_MODULE=uim
+export QT_IM_MODULE=uim
+# export LIBUIM_USER_SCM_FILE="$HOME"/.config/uim/uim.scm
+export XMODIFIERS='@im=uim'
+uim-xim &
+
+eval "$(dbus-launch --sh-syntax)"
+
+rm -f ~/.local/run/jack/*.pid
+
+# 'in' is a keyword >_>
+echo hw:PCH > ~/.local/run/jack/'in'
+echo hw:PCH > ~/.local/run/jack/out
+
+eval "$(ssh-agent)"
+
+# NOTE: THE ENTIRE UI IS 2X SCALED
+# every non-hidpi monitor (including the builtin one) will need
+# xrandr --scale 2x2 set. the following are to scale GTK icons - we
+# scale *all* GTK elements by 2 and then the non-icons by 0.5.
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.5
+
+feh --bg-scale .wallpaper/garlic-flower.jpg &
+xmonad --recompile && exec xmonad > ~/tmp/xmonad-custom-log

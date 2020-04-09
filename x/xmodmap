@@ -1,0 +1,68 @@
+! Make AltGr like non-english latin keyboards
+! 
+! keycode 108 = Mode_switch
+! keysym Super_L = Alt_R
+
+keysym n = n N n N ntilde Ntilde
+keysym a = a A a A Aacute Aacute
+keysym e = e E e E Eacute Eacute
+keysym i = i I i I Iacute Iacute
+keysym o = o O o O Oacute Oacute
+keysym u = u U u U Uacute Uacute
+
+! the [/?] key
+keycode 61 = slash question slash question questiondown questiondown
+
+!!!!! Number keys !!!!!
+
+! [!1]
+keycode 10 = exclam 1 1 exclam exclamdown exclamdown
+! [@2]
+keycode 11 = at 2 2 at
+! [#3]
+keycode 12 = numbersign 3 3 numbersign
+! [$4]
+keycode 13 = dollar 4 4 dollar
+! [%5]
+keycode 14 = percent 5 5 percent
+! [^6]       wtf is asciicircum oh i guess it's ^
+keycode 15 = asciicircum 6 6 asciicircum
+! [&7]
+keycode 16 = ampersand 7 7 ampersand
+! [*8]
+keycode 17 = asterisk 8 8 asterisk
+! [(9]
+keycode 18 = parenleft 9 9 parenleft
+! [)0]
+keycode 19 = parenright 0 0 parenright
+
+clear control
+clear Lock
+
+!!!!!!!!!!=== remapped keys ===!!!!!!!!!
+! caps lock
+keycode 66 = Control_L
+
+! left ctrl
+keycode 37 = Hankaku
+
+! menu button
+keycode 135 = Zenkaku
+
+! pause/break
+keycode 127 = Zenkaku_Hankaku
+
+add control = Control_L
+
+! virtual number pad - it's in arrow
+! mode by default for some reason?
+keycode 90 = 0
+keycode 87 = 1
+keycode 88 = 2
+keycode 89 = 3
+keycode 83 = 4
+keycode 84 = 5
+keycode 85 = 6
+keycode 79 = 7
+keycode 80 = 8
+keycode 81 = 9
