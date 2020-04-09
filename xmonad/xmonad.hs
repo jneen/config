@@ -42,8 +42,6 @@ myTerminal = "gnome-terminal"
 
 withWindowName = showWName' (def { swn_font = "xft:InputMono-12,M+" })
 
-fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
-
 pidQuery :: Query [Integer]
 pidQuery = ask >>= \w -> liftX $
    fmap (maybe [] (fmap toInteger)) $ getProp32s "_NET_WM_PID" w
@@ -89,10 +87,14 @@ manageSticky config = composeAll $ map makeQuery $ workspaces config
     makeQuery workspace = sticky =? (Just workspace) --> doShift workspace
 
 approxGoldenRatio :: Int -> Rational
-approxGoldenRatio n = (fibs !! n) / (fibs !! (n+1))
+approxGoldenRatio n = goldenRatios !! n
+  where
+    goldenRatios :: [Rational]
+    goldenRatios = iterate (\x -> 1/(1+x)) 1
+
 
 goldenRatio :: Rational
-goldenRatio = approxGoldenRatio 12
+goldenRatio = approxGoldenRatio 10
 
 myLayout = withWindowName $
            avoidStruts $
@@ -108,14 +110,10 @@ myLayout = withWindowName $
     pxspacing = 0
 
     -- The default number of windows in the master pane
-    --
     nmaster = 1
 
     -- default proportion of the screen occupied by the master pane
     ratio = (1 / goldenRatio) :: Rational
-
-    -- percent of screen to increment by when resizing panes
-    delta = 5/100
 
 myLayoutHook = smartBorders $ myLayout
 
@@ -178,7 +176,11 @@ termKeys = easyKeys $ \mask ->
   , ((0, explorerKey), safeSpawn myTerminal [])
   , ((0, searchKey), safeSpawn myTerminal []) ]
 
+-- Sys_Req is shift-print
+-- use it to take a shot of the whole screen (no select)
 printKey = stringToKeysym "Print"
+sysreqKey = stringToKeysym "Sys_Req"
+
 scrot_s = spawn "sleep 0.2; scrot -s ~/Screenshots/'%Y-%m-%d@%h:%m:%s_$wx$h.png' -e 'echo -n $f | xsel -b' 2>&1 | logger -t scrot"
 scrot_u = spawn "sleep 0.2; scrot -u ~/Screenshots/'%Y-%m-%d@%h:%m:%s_$wx$h.png' -e 'echo -n $f | xsel -b' 2>&1 | xsel -bc | logger -t scrot"
 
@@ -187,18 +189,19 @@ screenshotKeys = easyKeys $ \mask ->
   [ ((0, xK_F10),           scrot_s)
   , ((shiftMask, xK_F10),   scrot_u)
   , ((0, printKey),         scrot_s)
-  , ((shiftMask, printKey), scrot_u) ]
+  , ((0, sysreqKey), scrot_u) ]
 
 screenLayout :: String -> X ()
-screenLayout name = spawn $ "sleep 0.2; source ~/.screenlayout/"++name++".sh 2>&1 | logger -t screenlayout"
+screenLayout name = spawn $ "sleep 0.2; shellfn layout "++name++" 2>&1"
 
 layoutKeys :: Keys
 layoutKeys = easyKeys $ \mask ->
- [ ((mask, xK_d), screenLayout "default") ]
+ [ ((mask, xK_d), screenLayout "-d")
+ , ((mask, xK_f), screenLayout "default") ]
 
 execKeys :: Keys
-execKeys = easyKeys $ \mask ->
-  [ ((mask, xK_F5), spawnHere $ "discord" )] -- "bash < /tmp/xmonad-exec") ]
+execKeys = easyKeys $ \mask -> []
+  -- [ ((mask, xK_F5), spawnHere $ "discord" )] -- "bash < /tmp/xmonad-exec") ]
 
 myConfig = gnomeConfig
   { modMask = mod4Mask
