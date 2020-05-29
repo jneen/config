@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# bash escaping sucks
+TAB="$(echo -ne '\t')"
+
 case "$(uname -s)" in
   Darwin*) CONF_MODE=mac ;;
   Linux*) CONF_MODE=linux ;;

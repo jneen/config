@@ -171,7 +171,7 @@ noremap <silent> <Leader>fD :Mkdir!<cr>
 " delete the current file and close the buffer
 noremap <silent> <Leader>fr! :Remove!<cr>
 " save
-noremap <silent> <Leader>fs :<C-u>Wall<cr><Esc>:<C-u>noh<cr>
+noremap <silent> <Leader>fs :<C-u>wall<cr><Esc>:<C-u>noh<cr>
 " save only this file
 noremap <silent> <Leader>fS :w<cr>:noh<cr>
 " fe = file edit, for editing specific files that i'm always opening
@@ -254,6 +254,7 @@ noremap <silent> <Leader>sb <C-w>s:terminal bash %<cr>
 noremap <silent> <Leader>s. :so %<cr>
 noremap <silent> <Leader>se <C-w>s:terminal bash -c %<cr>
 noremap <silent> <Leader>sx <C-w>s:terminal xmodmap %<cr>
+noremap <silent> <Leader>so :!xdg-open %<cr>
 
 " use double-escape to go to terminal-normal mode
 tnoremap <silent> <Esc><Esc> <C-\><C-n>

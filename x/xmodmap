@@ -39,6 +39,8 @@ keycode 19 = parenright 0 0 parenright
 clear control
 clear Lock
 
+keycode 91 = period
+
 !!!!!!!!!!=== remapped keys ===!!!!!!!!!
 ! caps lock
 keycode 66 = Control_L

@@ -23,18 +23,10 @@ xflux -l "$LAT" -g "$LON" 2>&1 | logger -t xflux &
 
 export GTK_IM_MODULE=uim
 export QT_IM_MODULE=uim
-# export LIBUIM_USER_SCM_FILE="$HOME"/.config/uim/uim.scm
 export XMODIFIERS='@im=uim'
 uim-xim &
 
 eval "$(dbus-launch --sh-syntax)"
-
-rm -f ~/.local/run/jack/*.pid
-
-# 'in' is a keyword >_>
-echo hw:PCH > ~/.local/run/jack/'in'
-echo hw:PCH > ~/.local/run/jack/out
-
 eval "$(ssh-agent)"
 
 # NOTE: THE ENTIRE UI IS 2X SCALED
@@ -43,6 +35,7 @@ eval "$(ssh-agent)"
 # scale *all* GTK elements by 2 and then the non-icons by 0.5.
 export GDK_SCALE=2
 export GDK_DPI_SCALE=0.5
+# [jneen] this is broken lol
+# export QT_DEVICE_PIXEL_RATIO=2
 
-feh --bg-scale .wallpaper/garlic-flower.jpg &
 xmonad --recompile && exec xmonad > ~/tmp/xmonad-custom-log

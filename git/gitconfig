@@ -65,10 +65,11 @@
 	b = branch
 	br = branch -vv
 
-	d = diff
+	d = diff --patience
 	# diff --cached is the diff between the index and HEAD -
 	# i.e. what you are about to commit.
-	dc = diff --cached
+	dc = diff --cached --patience
+	dr = diff
 
 	a  = add
 	# interactive adding of parts of files

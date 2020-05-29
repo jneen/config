@@ -4,8 +4,6 @@ SCREENLAYOUT_D=$HOME/.screenlayout
 mkdir -p "$SCREENLAYOUT_D/_defaults"
 
 layout() {
-  xmodmap ~/.xmodmap
-
   local arg
   local set_default
   local config
@@ -30,7 +28,12 @@ layout() {
     echo "loading $fname:"
     cat "$fname"
     "$fname"
-    xmodmap ~/.xmodmap
+
+    # reset xmodmap automatically
+    xm
+
+    # re-launch feh
+    launch-wallpaper
   else
     echo "no such layout $config (in $fname)"
     return 1

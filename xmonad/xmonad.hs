@@ -14,6 +14,7 @@ import XMonad.Layout.ShowWName (showWName', swn_font, SWNConfig)
 import XMonad.Layout.Dwindle
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.WindowProperties
+import XMonad.Actions.PhysicalScreens
 
 import Foreign.C.Types (CLong)
 import System.Directory (doesFileExist)
@@ -23,7 +24,7 @@ import Data.Maybe (catMaybes, listToMaybe)
 import Data.List (dropWhileEnd)
 import Data.List.Split (splitOn)
 import Data.Char (isSpace)
-import Data.Function ((&))
+import Data.Function (on, (&))
 import Debug.Trace (traceIO)
 
 import XMonad.Actions.SpawnOn (spawnHere, manageSpawn)
@@ -56,7 +57,7 @@ sticky = do
 
   sticky <- fmap msum . sequence . map liftIO $ queries
 
-  liftIO $ log $ "sticky: " ++ (show sticky)
+  -- liftIO $ log $ "sticky: " ++ (show sticky)
   return sticky
 
   where
@@ -99,12 +100,13 @@ goldenRatio = approxGoldenRatio 10
 myLayout = withWindowName $
            avoidStruts $
            onWorkspace "9" (Full ||| tiled) $
-           (tiled ||| Full)
+           (tiled ||| horiz ||| Full)
   where
     -- default tiling alg partitions the screen into two panes
     -- tiled = spacing pxspacing $ Tall nmaster delta ratio
     -- tiled = spacing pxspacing $ spiral (1 / ratio)
     tiled = spacing pxspacing $ Dwindle R CW ratio ratio
+    horiz = spacing pxspacing $ Dwindle D CW ratio ratio
 
     -- spacing between panes
     pxspacing = 0
@@ -148,6 +150,18 @@ windowKeys conf@(XConfig {modMask = passedMask}) = Map.fromList $ do
   (workspace, key) <- zip (workspaces conf) shiftedNumerals
   let action = windows $ op workspace
   return ((mask, key), action)
+
+-- order w, e, r keys by x-coordinate of the rectangle
+screenKeys :: Keys
+screenKeys = easyKeys $ \mask ->
+  do
+    (key, screenNumber) <- zip [xK_w, xK_e, xK_r] [0..]
+    (f, shift) <- [(viewScreen comp, 0), (sendToScreen comp, shiftMask)]
+    return ((mask .|. shift, key), f screenNumber)
+
+  where
+    comp :: ScreenComparator
+    comp = screenComparatorByRectangle (compare `on` rect_x)
 
 lowerVolumeKey = stringToKeysym "XF86AudioLowerVolume"
 raiseVolumeKey = stringToKeysym "XF86AudioRaiseVolume"
@@ -214,6 +228,7 @@ myConfig = gnomeConfig
   , focusedBorderColor = "#68B1D0" -- light gray
   , keys = (termKeys
          <> windowKeys
+         <> screenKeys
          <> volumeKeys
          <> screenshotKeys
          <> brightnessKeys
