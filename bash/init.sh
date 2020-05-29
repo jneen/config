@@ -78,13 +78,18 @@ execd() {
 is-interactive() { test -n "$PS1" ;}
 is-script() { ! is-interactive ;}
 
-is-mac && is-interactive && {
-  . /usr/local/share/bash-completion/bash_completion
-  for f in /usr/local/etc/bash_completion.d/*; do
-    . "$f"
+if is-linux; then
+  . /usr/share/bash-completion/bash_completion
+  for f in $HOME/.local/share/bash-completion/completions/*; do
+    [[ -s "$f" ]] && . "$f"
   done
-}
+elif is-mac; then
+  echo
+  . /usr/local/etc/profile.d/bash_completion.sh
+fi
 
 for f in "$HOME"/.config/bash/bashrc/*.sh; do
   . "$f"
 done
+
+true

@@ -8,7 +8,7 @@
 
 " ==================== plugins ===================
 
-set shell=/usr/bin/bash\ -il
+set shell=$SHELL\ -il
 " using the "Ack" plugin but actually using the "ag"
 " program, to find patterns in a project
 " :Ack some.*pattern

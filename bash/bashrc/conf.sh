@@ -20,7 +20,9 @@ vb() { vibashrc "$@"; }
 __complete_vb() { __complete_files $HOME/.config/bash/bashrc .sh; }
 is-interactive && complete -F __complete_vb vb vibashrc
 
-export SHELL=/usr/bin/bash
+if is-linux; then export SHELL=/usr/bin/bash
+elif is-mac; then export SHELL=/usr/local/bin/bash
+fi
 
 shell() { exec "$SHELL" "$@"; }
 

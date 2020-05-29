@@ -1,3 +1,5 @@
-. /usr/share/bash-completion/completions/yay
-alias y=yay
-complete -F _yay y
+is-linux && {
+  . /usr/share/bash-completion/completions/yay
+  alias y=yay
+  complete -F _yay y
+}
