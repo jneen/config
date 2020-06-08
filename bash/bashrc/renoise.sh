@@ -10,5 +10,5 @@ oggify() {
 }
 
 twitterify() {
-  ffmpeg -i "$1" -c:a aac -ab 112k -shortest -strict -2 "$2"
+  ffmpeg -i "$1" -c:a aac -ab 112k -c:v libx264 -shortest -strict -2 "$2"
 }

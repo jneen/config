@@ -1,4 +1,6 @@
 #!/bin/bash
-open() {
-  run xdg-open "$@"
+is-linux && {
+  open() {
+    run xdg-open "$@"
+  }
 }

@@ -1,36 +1,28 @@
 #!/usr/bin/env sh
 
-# bar settings
-yabai -m config status_bar                   off
-yabai -m config status_bar_text_font         "Helvetica Neue:Bold:12.0"
-yabai -m config status_bar_icon_font         "FontAwesome:Regular:12.0"
-yabai -m config status_bar_background_color  0xff202020
-yabai -m config status_bar_foreground_color  0xffa8a8a8
-yabai -m config status_bar_space_icon_strip  I II III IV V VI VII VIII IX X
-yabai -m config status_bar_power_icon_strip   
-yabai -m config status_bar_space_icon        
-yabai -m config status_bar_clock_icon        
+export ROOT_DISPLAY_UUID='41D3C12A-1527-D16E-F44E-90028431FC4E'
+export PATH="$HOME/src/yabai/bin:$PATH"
+
+yabai -m config debug_output on
 
 # global settings
 yabai -m config mouse_follows_focus          on
 yabai -m config focus_follows_mouse          autofocus
+yabai -m config display_sort_order           horizontal
 yabai -m config window_placement             second_child
-yabai -m config window_topmost               off
+yabai -m config window_topmost               on
 yabai -m config window_opacity               off
 # yabai -m config window_opacity_duration      0.0
 yabai -m config window_shadow                on
-yabai -m config window_border                on
-yabai -m config window_border_width          4
-yabai -m config active_window_border_color   0xdddddddd
-yabai -m config normal_window_border_color   0xff505050
-yabai -m config insert_window_border_color   0xffd75f5f
 yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.8
+yabai -m config normal_window_opacity        0.85
 yabai -m config split_ratio                  0.68
 yabai -m config auto_balance                 off
-yabai -m config mouse_modifier               fn
+yabai -m config mouse_modifier               alt
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
+
+yabai -m config insert_feedback_color 0xaad75f5f
 
 # general space settings
 yabai -m config layout                       bsp
@@ -38,11 +30,23 @@ yabai -m config top_padding                  0
 yabai -m config bottom_padding               0
 yabai -m config left_padding                 0
 yabai -m config right_padding                0
-yabai -m config window_gap                   0
+yabai -m config window_gap                   2
 
-yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Preferences$" layer=above manage=off
+yabai -m rule --add app="^Renoise$" layer=above manage=off
+yabai -m rule --add app="^Renoise$" title=".xrns$" layer=normal manage=off
+yabai -m rule --add app="^Renoise$" title="^Renoise" layer=normal manage=off
+yabai -m rule --add app="^GIMP" layer=above manage=off
+yabai -m rule --add app="^GIMP" title="GIMP$" layer=normal manage=on
+yabai -m rule --add app="^Reminders" layer=above manage=off
 
-yabai -m rule --add app="^Discord$" space=7
-yabai -m rule --add app="^Firefox$" space=2
+yabai -m rule --add app="^Live$" manage=off
+
+yabai -m rule --add title="Preferences" layer=above manage=off
+
+~/.local/bin/spaces init
+
+# yabai -m rule --add app="^Discord$" space=7
+# yabai -m rule --add app="^Firefox$" space=2
 
 echo "yabai configuration loaded.."

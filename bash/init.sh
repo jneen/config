@@ -1,5 +1,7 @@
 #!/bin/bash
 
+shopt -s globstar
+
 # bash escaping sucks
 TAB="$(echo -ne '\t')"
 

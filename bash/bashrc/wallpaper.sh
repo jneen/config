@@ -1,5 +1,7 @@
-WALLPAPER=~/.wallpaper/garlic-flower.jpg
+is-linux && {
+  WALLPAPER=~/.wallpaper/garlic-flower.jpg
 
-launch-wallpaper() {
-  feh --bg-scale "$WALLPAPER"
+  launch-wallpaper() {
+    feh --bg-scale "$WALLPAPER"
+  }
 }
