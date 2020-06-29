@@ -1,28 +1,29 @@
 #!/bin/bash
 
-is-linux && {
-  export NETCTL_DEBUG=yes
-  PING=8.8.8.8
+is-linux || return 0
 
-  net() { sudo netctl "$@" ;}
-  _completion_loader netctl
-  complete -F _netctl net
-  n() { wifi connect "$@" && echo 'connected. ping:'; ping "$PING" ;}
-  nb() { wifi connect "$@" && x br ;}
+export NETCTL_DEBUG=yes
+PING=8.8.8.8
 
-  # wifi() { sudo wifi-menu "$@" && p8 ;}
-  wpa() { sudo wpa_cli "$@" ;}
-  wifi() { sudo /usr/local/bin/wifi "$@" ;}
+net() { sudo netctl "$@" ;}
+_completion_loader netctl
+complete -F _netctl net
+n() { wifi connect "$@" && echo 'connected. ping:'; ping "$PING" ;}
+nb() { wifi connect "$@" && x br ;}
 
-  sys() { sudo systemctl "$@" ;}
-  _completion_loader systemctl
-  complete -F _systemctl sys
+# wifi() { sudo wifi-menu "$@" && p8 ;}
+wpa() { sudo wpa_cli "$@" ;}
+wifi() { sudo /usr/local/bin/wifi "$@" ;}
 
-  jc() { sudo journalctl "$@" ;}
+sys() { sudo systemctl "$@" ;}
+_completion_loader systemctl
+complete -F _systemctl sys
 
-  _complete_n() {
-    COMPREPLY=( $( compgen -W "$(_netctl_profiles)" "${COMP_WORDS[COMP_CWORD]}" ) )
-  }
-  complete -F _complete_n n
-  complete -F _complete_n nb
+jc() { sudo journalctl "$@" ;}
+
+_complete_n() {
+  COMPREPLY=( $( compgen -W "$(_netctl_profiles)" "${COMP_WORDS[COMP_CWORD]}" ) )
 }
+
+complete -F _complete_n n
+complete -F _complete_n nb

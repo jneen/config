@@ -1,12 +1,11 @@
 #!/bin/bash
-is-interactive && {
-  grc-alias() {
-    exists "$1" && alias "$1"="grc $@"
-  }
+is-interactive || return 0
+exists grc || return 0
 
-  exists grc && {
-    grc-alias netstat
-    grc-alias ping
-    grc-alias traceroute
-  }
+grc-alias() {
+  exists "$1" && alias "$1"="grc $@"
 }
+
+grc-alias netstat
+grc-alias ping
+grc-alias traceroute

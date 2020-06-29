@@ -1,0 +1,120 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'pry'
+require 'set'
+
+puts "spaces #{ARGV.join(' ')}"
+
+YABAI = ENV['YABAI'] || 'yabai'
+
+def space
+  puts "loading space"
+  @space ||= JSON.load(`#{YABAI} -m query --spaces --space @#@num`)
+end
+
+def display
+  puts "loading display"
+  @display ||= JSON.load(`#{YABAI} -m query --displays --display`)
+end
+
+def all_displays
+  @all_displays ||= JSON.load(`#{YABAI} -m query --displays`)
+end
+
+def all_spaces
+  @all_spaces ||= JSON.load(`#{YABAI} -m query --spaces`)
+end
+
+class NotEnoughSpaces < StandardError; end
+def ensure_labeled
+  existing_labels = Set.new(all_spaces.map { |s| s['label'] =~ /@(\d+)/; $1 }.compact.map(&:to_i))
+
+  if all_spaces.size < 9
+    puts "creating #{9 - labeled_spaces.size} new spaces"
+    (9 - labeled_spaces.size).times do
+      system "#{YABAI} -m space --create"
+    end
+
+    @all_spaces = nil
+  end
+
+  all = all_spaces.dup
+  (1..9).each do |i|
+    next if existing_labels.include?(i)
+
+    puts "creating space label @#{i}"
+
+    while true
+      unlabeled = all.shift
+      raise NotEnoughSpaces if unlabeled.nil?
+      break if unlabeled['label'] == ''
+    end
+
+    system "#{YABAI} -m space #{unlabeled['index']} --label @#{i}"
+  end
+
+rescue NotEnoughSpaces
+  @retries ||= 0
+  @retries += 1
+  raise 'oops' if @retries > 3
+
+  @all_spaces = nil
+
+  (9 - labeled_spaces.size).times do
+    system 'yabai -m space --create'
+  end
+
+  retry
+end
+
+def init
+  ensure_labeled
+  system "yabai -m signal --add event=display_added action='#{__FILE__} display_added'"
+  system "yabai -m signal --add event=display_removed action='#{__FILE__} display_removed'"
+end
+
+def switch
+  if space['display'] != display['index']
+    puts "moving space"
+    system "yabai -m space @#@num --display #{display['index']}"
+  end
+
+  system "yabai -m space --focus @#@num"
+end
+
+def move
+  system "yabai -m window --space @#@num"
+  switch
+end
+
+def display_added
+  puts "display_added #{ENV['YABAI_DISPLAY_ID']}"
+
+  # new_display = all_displays.find { |d| d['id'].to_s == ENV['YABAI_DISPLAY_ID'] }
+
+  # system 'yabai -m space --create'
+
+  # # move a "real" (i.e. properly labelled) space onto the new display immediately
+  # # this way the "dummy" display is always at 0.
+  # space_to_show = all_spaces.find { |s| s['label'] =~ /@\d+/ }
+  # system "yabai -m space #{space_to_show['index']} --display #{new_display['index']}"
+end
+
+def display_removed
+  ensure_labeled
+end
+
+@mode = ARGV.shift
+@num = ARGV.shift
+@num &&= @num.to_i
+
+case @mode
+when 'switch' then switch
+when 'init' then init
+when 'move' then move
+when 'display_added' then display_added
+when 'display_removed' then display_removed
+else raise "no mode: #{@mode}"
+end
+

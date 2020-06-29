@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OATH_DIR="$HOME/.oath"
+OATH_DIR="$CONF_DIR/.oath"
 
 oath() {
   oathtool -b --totp "$(gpg -d "$OATH_DIR/secrets/$1.gpg")"

@@ -34,6 +34,8 @@ bootstrap() {
 }
 
 bootstrap-global() {
+  mkdir -p ~/.local/bin
+
   execd $ln .config/git/gitconfig ~/.gitconfig
 
   execd $ln .config/nvim ~/.vim
@@ -63,6 +65,8 @@ bootstrap-linux() {
 bootstrap-mac() {
   local ln="/bin/ln -shf"
   bootstrap-global
+
+  $ln ~/.config/bin/spaces ~/.local/bin/spaces
 
   # some defaults commands only work globally ("sudo"), some only work as the user
   # I'm too lazy to figure out which one needs what

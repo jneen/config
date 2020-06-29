@@ -29,28 +29,39 @@ __complete_files() {
 
 export TERM=xterm
 
-pathdel() {
+listdel() {
+  local var_name="$1"; shift
+
   for p in "$@"; do
-    export PATH="$(tr : "\n" <<<"$PATH" | fgrep -vx "$p" | tr "\n" :)"
+    export "$var_name"="$(tr : "\n" <<<"${!var_name}" | fgrep -vx "$p" | tr "\n" :)"
   done
 
   # chomp off the last :
-  export PATH="${PATH%:}"
+  export "$var_name"="${!var_name%:}"
+  export "$var_name"="${!var_name%:}"
 }
 
-pathshift() {
+listshift() {
+  local var_name="$1"; shift
+
   for p in "$@"; do
-    pathdel "$p"
-    export PATH="$p:$PATH"
+    listdel "$var_name" "$p"
+    export "$var_name"="$p:${!var_name}"
   done
 }
 
-pathpush() {
+list() {
+  local var_name="$1"; shift
+
   for p in "$@"; do
-    pathdel "$p"
-    export PATH="$PATH:$p"
+    listdel "$var_name" "$p"
+    export "$var_name"="${!var_name}:$p"
   done
 }
+
+pathshift() { listshift PATH "$@"; }
+pathdel() { listdel PATH "$@"; }
+pathpush() { listpush PATH "$@"; }
 
 exists() {
   silence type "$@"

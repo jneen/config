@@ -19,10 +19,16 @@ shift + alt - k : ~/src/yabai/bin/yabai -m window --swap north
 shift + alt - l : ~/src/yabai/bin/yabai -m window --swap east
 
 # move window
-shift + cmd - h : ~/src/yabai/bin/yabai -m window --warp west
-shift + cmd - j : ~/src/yabai/bin/yabai -m window --warp south
-shift + cmd - k : ~/src/yabai/bin/yabai -m window --warp north
-shift + cmd - l : ~/src/yabai/bin/yabai -m window --warp east
+ctrl + alt - h : ~/src/yabai/bin/yabai -m window --warp west; ~/src/yabai/bin/yabai -m window --insert west
+ctrl + alt - j : ~/src/yabai/bin/yabai -m window --warp south; ~/src/yabai/bin/yabai -m window --insert south
+ctrl + alt - k : ~/src/yabai/bin/yabai -m window --warp north; ~/src/yabai/bin/yabai -m window --insert north
+ctrl + alt - l : ~/src/yabai/bin/yabai -m window --warp east; ~/src/yabai/bin/yabai -m window --insert east
+
+# set insertion point in focused container
+# ctrl + alt - h : yabai -m window --insert west
+# ctrl + alt - j : yabai -m window --insert south
+# ctrl + alt - k : yabai -m window --insert north
+# ctrl + alt - l : yabai -m window --insert east
 
 # balance size of windows
 shift + alt - 0 : ~/src/yabai/bin/yabai -m space --balance
@@ -36,25 +42,25 @@ shift + alt - left   : ~/src/yabai/bin/yabai -m window --grid 1:2:0:0:1:1
 # make floating window fill right-half of screen
 shift + alt - right  : ~/src/yabai/bin/yabai -m window --grid 1:2:1:0:1:1
 
-alt - 1 : ~/src/yabai/bin/yabai -m space --switch @1
-alt - 2 : ~/src/yabai/bin/yabai -m space --switch @2
-alt - 3 : ~/src/yabai/bin/yabai -m space --switch @3
-alt - 4 : ~/src/yabai/bin/yabai -m space --switch @4
-alt - 5 : ~/src/yabai/bin/yabai -m space --switch @5
-alt - 6 : ~/src/yabai/bin/yabai -m space --switch @6
-alt - 7 : ~/src/yabai/bin/yabai -m space --switch @7
-alt - 8 : ~/src/yabai/bin/yabai -m space --switch @8
-alt - 9 : ~/src/yabai/bin/yabai -m space --switch @9
+alt - 1 : ~/src/yabai/bin/yabai -m space --switch @1 2>> /tmp/yabai.error
+alt - 2 : ~/src/yabai/bin/yabai -m space --switch @2 2>> /tmp/yabai.error
+alt - 3 : ~/src/yabai/bin/yabai -m space --switch @3 2>> /tmp/yabai.error
+alt - 4 : ~/src/yabai/bin/yabai -m space --switch @4 2>> /tmp/yabai.error
+alt - 5 : ~/src/yabai/bin/yabai -m space --switch @5 2>> /tmp/yabai.error
+alt - 6 : ~/src/yabai/bin/yabai -m space --switch @6 2>> /tmp/yabai.error
+alt - 7 : ~/src/yabai/bin/yabai -m space --switch @7 2>> /tmp/yabai.error
+alt - 8 : ~/src/yabai/bin/yabai -m space --switch @8 2>> /tmp/yabai.error
+alt - 9 : ~/src/yabai/bin/yabai -m space --switch @9 2>> /tmp/yabai.error
 
-alt + shift - 1 : yabai -m window --space @1 && ~/src/yabai/bin/yabai -m space --switch @1
-alt + shift - 2 : yabai -m window --space @2 && ~/src/yabai/bin/yabai -m space --switch @2
-alt + shift - 3 : yabai -m window --space @3 && ~/src/yabai/bin/yabai -m space --switch @3
-alt + shift - 4 : yabai -m window --space @4 && ~/src/yabai/bin/yabai -m space --switch @4
-alt + shift - 5 : yabai -m window --space @5 && ~/src/yabai/bin/yabai -m space --switch @5
-alt + shift - 6 : yabai -m window --space @6 && ~/src/yabai/bin/yabai -m space --switch @6
-alt + shift - 7 : yabai -m window --space @7 && ~/src/yabai/bin/yabai -m space --switch @7
-alt + shift - 8 : yabai -m window --space @8 && ~/src/yabai/bin/yabai -m space --switch @8
-alt + shift - 9 : yabai -m window --space @9 && ~/src/yabai/bin/yabai -m space --switch @9
+alt + shift - 1 : yabai -m window --switch @1 2>> /tmp/yabai.error
+alt + shift - 2 : yabai -m window --switch @2 2>> /tmp/yabai.error
+alt + shift - 3 : yabai -m window --switch @3 2>> /tmp/yabai.error
+alt + shift - 4 : yabai -m window --switch @4 2>> /tmp/yabai.error
+alt + shift - 5 : yabai -m window --switch @5 2>> /tmp/yabai.error
+alt + shift - 6 : yabai -m window --switch @6 2>> /tmp/yabai.error
+alt + shift - 7 : yabai -m window --switch @7 2>> /tmp/yabai.error
+alt + shift - 8 : yabai -m window --switch @8 2>> /tmp/yabai.error
+alt + shift - 9 : yabai -m window --switch @9 2>> /tmp/yabai.error
 
 # destroy desktop
 # cmd + alt - w : yabai -m space --destroy
@@ -84,12 +90,6 @@ alt + shift - r : ~/src/yabai/bin/yabai -m window --display 3 && ~/src/yabai/bin
 # shift + cmd - s : yabai -m window --resize bottom:0:-20
 # shift + cmd - w : yabai -m window --resize top:0:20
 # shift + cmd - d : yabai -m window --resize right:-20:0
-
-# set insertion point in focused container
-# ctrl + alt - h : yabai -m window --insert west
-# ctrl + alt - j : yabai -m window --insert south
-# ctrl + alt - k : yabai -m window --insert north
-# ctrl + alt - l : yabai -m window --insert east
 
 # rotate tree
 # alt - r : yabai -m space --rotate 90
@@ -121,6 +121,9 @@ shift + alt - f : ~/src/yabai/bin/yabai -m window --toggle native-fullscreen
 # float / unfloat window and center on screen
 alt - t : ~/src/yabai/bin/yabai -m window --toggle float;\
           ~/src/yabai/bin/yabai -m window --grid 4:4:1:1:2:2
+
+alt - i : yabai -m config focus_follows_mouse autofocus
+alt - o : yabai -m config focus_follows_mouse off
 
 # toggle sticky
 # alt - s : yabai -m window --toggle sticky

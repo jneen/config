@@ -53,9 +53,11 @@ set modeline
 set undofile
 
 " 3 lines of space between cursor and edge,
-" 5 columns of space between cursor and edge
 set scrolloff=3
-set sidescrolloff=5
+
+" 5 columns of space between cursor and edge
+" disabled because we have line wrapping?
+" set sidescrolloff=5
 
 set undodir=~/.cache/vim/undo//
 set directory=~/.cache/vim/swap//
@@ -254,7 +256,7 @@ noremap <silent> <Leader>sb <C-w>s:terminal bash %<cr>
 noremap <silent> <Leader>s. :so %<cr>
 noremap <silent> <Leader>se <C-w>s:terminal bash -c %<cr>
 noremap <silent> <Leader>sx <C-w>s:terminal xmodmap %<cr>
-noremap <silent> <Leader>so :!xdg-open %<cr>
+noremap <silent> <Leader>so :!shell-fn open %<cr>
 
 " use double-escape to go to terminal-normal mode
 tnoremap <silent> <Esc><Esc> <C-\><C-n>
@@ -292,6 +294,8 @@ tnoremap <silent> <C-h> <C-\><C-n>:-tabmove<cr>
 " >> edits
 " strip trailing whitespace
 noremap <leader>ew :%s/\s\+$//<cr>
+
+hi link coffeeSpaceError NONE
 
 " let g:pyindent_continue = 'shiftwidth() / 2'
 " unlet g:pyindent_nested_paren
