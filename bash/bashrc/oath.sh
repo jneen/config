@@ -1,5 +1,7 @@
 #!/bin/bash
 
+is-local || return 0
+
 OATH_DIR="$CONF_DIR/.oath"
 
 oath() {

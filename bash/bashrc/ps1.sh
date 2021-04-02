@@ -7,13 +7,18 @@ is-interactive && {
   RED="$(__c '1;32')"
   ERR="$(__c '1;3$(($??1:7))')"
   DIR="$(__c '1;34')"
-  PROMPT="$(__c '1;32')"
+
+  if is-local
+  then PROMPT="$(__c '1;32')"
+  else PROMPT="$(__c '1;35')"
+  fi
+
   CLEAR="$(__c '0;38')"
 
   unset __c
 
   ps1() {
-    echo "\n$ERR[\$?:$PROMPT \u@\h $DIR\W $ERR]\$(ps1::git) \\$ $CLEAR\n; "
+    echo "\n$ERR{\$?:$PROMPT \u@\h $DIR\W $ERR}\$(ps1::git) \\$ $CLEAR\n; "
   }
 
   ps1::isgit() {

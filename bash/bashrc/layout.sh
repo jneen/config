@@ -1,6 +1,6 @@
 #!/bin/bash
 
-is-linux || return 0
+( is-linux && is-local ) || return 0
 
 SCREENLAYOUT_D=$HOME/.screenlayout
 mkdir -p "$SCREENLAYOUT_D/_defaults"

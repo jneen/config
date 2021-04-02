@@ -1,5 +1,7 @@
 #!/bin/bash
 
+is-local || return 0
+
 is-linux && {
   export AUDIO_DEFAULT_CAPTURE=hw:PCH
   export AUDIO_DEFAULT_PLAYBACK=hw:PCH

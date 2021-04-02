@@ -1,1 +1,1 @@
-export HOMEBREW_INSTALL_BADGE=🔮
+is-mac && export HOMEBREW_INSTALL_BADGE=🔮

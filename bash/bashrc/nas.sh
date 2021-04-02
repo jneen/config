@@ -1,5 +1,6 @@
 #!/bin/bash
 
+is-local || return 0
 is-linux && MOUNT_PREFIX=/mnt
 is-mac && MOUNT_PREFIX=$HOME/mnt
 

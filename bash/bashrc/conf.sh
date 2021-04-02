@@ -52,14 +52,18 @@ bootstrap-global() {
 
 bootstrap-linux() {
   local ln="ln -snf"
-  execd dconf dump /org/gnome/terminal/ | fgrep -q 'Thankful Eyes' || {
-    execd bash ~/.config/gnome-terminal/thankful-eyes.sh
-  }
   bootstrap-global
-  execd $ln ~/.config/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
-  execd $ln ~/.config/uim ~/.uim.d
-  execd $ln ~/.config/x/xinitrc ~/.xinitrc
-  execd mkdir -p ~/Screenshots
+
+  [[ -z "$SSH_CLIENT" ]] && {
+    execd dconf dump /org/gnome/terminal/ | fgrep -q 'Thankful Eyes' || {
+      execd bash ~/.config/gnome-terminal/thankful-eyes.sh
+    }
+
+    execd $ln ~/.config/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
+    execd $ln ~/.config/uim ~/.uim.d
+    execd $ln ~/.config/x/xinitrc ~/.xinitrc
+    execd mkdir -p ~/Screenshots
+  }
 }
 
 bootstrap-mac() {

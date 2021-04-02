@@ -1,6 +1,7 @@
 #!/bin/bash
 
 is-linux || return 0
+is-local || return 0
 
 export NETCTL_DEBUG=yes
 PING=8.8.8.8

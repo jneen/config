@@ -13,6 +13,8 @@ esac
 
 is-mac() { [[ "$CONF_MODE" = mac ]] ;}
 is-linux() { [[ "$CONF_MODE" = linux ]] ;}
+is-remote() { [[ -n "$SSH_CLIENT" ]] ;}
+is-local() { [[ -z "$SSH_CLIENT" ]] ;}
 
 __complete_files() {
   local dir="$1"; shift

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-is-linux && {
+is-linux && is-local && {
   # use the clipboard for xsel
   alias xsel='xsel -b'
 

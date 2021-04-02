@@ -1,5 +1,7 @@
 #!/bin/bash
 
+is-local || return 0
+
 is-linux && {
   current-desktop() {
     desktop="$(xdotool get_desktop 2>/dev/null)"
