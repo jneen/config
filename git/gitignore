@@ -1,2 +1,19 @@
-/.envrc
+# global gitignore file
+
+# global tmp
 /tmp
+
+# direnv
+/.envrc
+
+# local vim
+/.init.vim
+
+# local rails config
+/config/initializers/zzlocal.rb
+
+# local gems
+/.gem
+
+# node_modules
+/node_modules

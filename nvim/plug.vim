@@ -1,7 +1,10 @@
 call plug#begin('~/.vim/bundle')
 
-" thanks tpope
+Plug 'ap/vim-css-color'
+" editorconfig for shared projects
+Plug 'editorconfig/editorconfig-vim'
 
+" thanks tpope
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
@@ -11,7 +14,7 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'lambdalisue/suda.vim'
 " Plug 'chrisbra/SudoEdit.vim'
-
+Plug 'christoomey/vim-sort-motion'
 Plug 'mileszs/ack.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -23,7 +26,11 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " js
 Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'kchmck/vim-coffee-script'
+
+" rust
+Plug 'rust-lang/rust.vim'
 
 " Pug
 Plug 'digitaltoad/vim-pug'

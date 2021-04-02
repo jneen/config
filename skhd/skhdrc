@@ -4,13 +4,14 @@
 fn - 0x8300 : kitty -d ~
 alt - return : kitty -d ~
 
-alt - q : killall yabai
+# alt - q : killall yabai
+alt - q : sudo yabai --load-sa
 
 # focus window
-alt - h : ~/src/yabai/bin/yabai -m window --focus prev
-alt - j : ~/src/yabai/bin/yabai -m window --focus next
-alt - k : ~/src/yabai/bin/yabai -m window --focus north
-alt - l : ~/src/yabai/bin/yabai -m window --focus east
+alt - h : yabai -m window --focus prev
+alt - j : yabai -m window --focus next
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
 
 # swap window
 shift + alt - h : ~/src/yabai/bin/yabai -m window --swap west
@@ -42,15 +43,15 @@ shift + alt - left   : ~/src/yabai/bin/yabai -m window --grid 1:2:0:0:1:1
 # make floating window fill right-half of screen
 shift + alt - right  : ~/src/yabai/bin/yabai -m window --grid 1:2:1:0:1:1
 
-alt - 1 : ~/src/yabai/bin/yabai -m space --switch @1 2>> /tmp/yabai.error
-alt - 2 : ~/src/yabai/bin/yabai -m space --switch @2 2>> /tmp/yabai.error
-alt - 3 : ~/src/yabai/bin/yabai -m space --switch @3 2>> /tmp/yabai.error
-alt - 4 : ~/src/yabai/bin/yabai -m space --switch @4 2>> /tmp/yabai.error
-alt - 5 : ~/src/yabai/bin/yabai -m space --switch @5 2>> /tmp/yabai.error
-alt - 6 : ~/src/yabai/bin/yabai -m space --switch @6 2>> /tmp/yabai.error
-alt - 7 : ~/src/yabai/bin/yabai -m space --switch @7 2>> /tmp/yabai.error
-alt - 8 : ~/src/yabai/bin/yabai -m space --switch @8 2>> /tmp/yabai.error
-alt - 9 : ~/src/yabai/bin/yabai -m space --switch @9 2>> /tmp/yabai.error
+alt - 1 : yabai -m space --switch @1 2>> /tmp/yabai.error
+alt - 2 : yabai -m space --switch @2 2>> /tmp/yabai.error
+alt - 3 : yabai -m space --switch @3 2>> /tmp/yabai.error
+alt - 4 : yabai -m space --switch @4 2>> /tmp/yabai.error
+alt - 5 : yabai -m space --switch @5 2>> /tmp/yabai.error
+alt - 6 : yabai -m space --switch @6 2>> /tmp/yabai.error
+alt - 7 : yabai -m space --switch @7 2>> /tmp/yabai.error
+alt - 8 : yabai -m space --switch @8 2>> /tmp/yabai.error
+alt - 9 : yabai -m space --switch @9 2>> /tmp/yabai.error
 
 alt + shift - 1 : yabai -m window --switch @1 2>> /tmp/yabai.error
 alt + shift - 2 : yabai -m window --switch @2 2>> /tmp/yabai.error
@@ -92,7 +93,7 @@ alt + shift - r : ~/src/yabai/bin/yabai -m window --display 3 && ~/src/yabai/bin
 # shift + cmd - d : yabai -m window --resize right:-20:0
 
 # rotate tree
-# alt - r : yabai -m space --rotate 90
+alt - z : yabai -m space --rotate 90
 
 # mirror tree y-axis
 # alt - y : yabai -m space --mirror y-axis
@@ -122,8 +123,8 @@ shift + alt - f : ~/src/yabai/bin/yabai -m window --toggle native-fullscreen
 alt - t : ~/src/yabai/bin/yabai -m window --toggle float;\
           ~/src/yabai/bin/yabai -m window --grid 4:4:1:1:2:2
 
-alt - i : yabai -m config focus_follows_mouse autofocus
-alt - o : yabai -m config focus_follows_mouse off
+alt - i : yabai -m config focus_follows_mouse autofocus; yabai -m config mouse_follows_focus on
+alt - o : yabai -m config focus_follows_mouse off; yabai -m config mouse_follows_focus off
 
 # toggle sticky
 # alt - s : yabai -m window --toggle sticky

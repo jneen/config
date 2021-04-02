@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'json'
-require 'pry'
+# require 'pry'
 require 'set'
 
 puts "spaces #{ARGV.join(' ')}"
@@ -31,8 +31,8 @@ def ensure_labeled
   existing_labels = Set.new(all_spaces.map { |s| s['label'] =~ /@(\d+)/; $1 }.compact.map(&:to_i))
 
   if all_spaces.size < 9
-    puts "creating #{9 - labeled_spaces.size} new spaces"
-    (9 - labeled_spaces.size).times do
+    puts "creating #{9 - existing_labels.size} new spaces"
+    (9 - existing_labels.size).times do
       system "#{YABAI} -m space --create"
     end
 
@@ -61,7 +61,7 @@ rescue NotEnoughSpaces
 
   @all_spaces = nil
 
-  (9 - labeled_spaces.size).times do
+  (9 - existing_labels.size).times do
     system 'yabai -m space --create'
   end
 
@@ -70,8 +70,8 @@ end
 
 def init
   ensure_labeled
-  system "yabai -m signal --add event=display_added action='#{__FILE__} display_added'"
-  system "yabai -m signal --add event=display_removed action='#{__FILE__} display_removed'"
+  system "yabai -m signal --add label=spaces-display-added event=display_added action='#{__FILE__} display_added'"
+  system "yabai -m signal --add label=spaces-display-removed event=display_removed action='#{__FILE__} display_removed'"
 end
 
 def switch

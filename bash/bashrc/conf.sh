@@ -3,7 +3,8 @@
 export CONF_DIR="$HOME"/.config
 
 config() {
-  cd "$CONF_DIR" && SESSION=config edit "$@" && cd -
+  local back="$PWD"
+  cd "$CONF_DIR" && SESSION=config o "$@" && cd "$back"
 }
 
 vibashrc() {
@@ -36,6 +37,8 @@ bootstrap() {
 bootstrap-global() {
   mkdir -p ~/.local/bin
 
+  execd install -d -m 700 ~/.ssh
+  execd install -m 600 ~/.ssh/config .config/ssh/config
   execd $ln .config/git/gitconfig ~/.gitconfig
 
   execd $ln .config/nvim ~/.vim

@@ -19,5 +19,10 @@ zoom.conf
 /GIMP
 /falkTX
 /libreoffice
+/yarn
+/milkytracker
+/ssh
+/swi-prolog
+
 
 *.gpg

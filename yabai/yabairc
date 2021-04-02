@@ -3,7 +3,14 @@
 export ROOT_DISPLAY_UUID='41D3C12A-1527-D16E-F44E-90028431FC4E'
 export PATH="$HOME/src/yabai/bin:$PATH"
 
+sudo yabai --load-sa
+yabai -m signal --add \
+  label=reload_sa \
+  event=dock_did_restart \
+  action="sudo yabai --load-sa"
+
 yabai -m config debug_output on
+
 
 # global settings
 yabai -m config mouse_follows_focus          on
@@ -32,15 +39,18 @@ yabai -m config left_padding                 2
 yabai -m config right_padding                2
 yabai -m config window_gap                   2
 
-yabai -m rule --add app="^System Preferences$" layer=above manage=off
-yabai -m rule --add app="^Renoise$" layer=above manage=off
-yabai -m rule --add app="^Renoise$" title=".xrns$" layer=normal manage=off
-yabai -m rule --add app="^Renoise$" title="^Renoise" layer=normal manage=off
-yabai -m rule --add app="^GIMP" layer=above manage=off
-yabai -m rule --add app="^GIMP" title="GIMP$" layer=normal manage=on
-yabai -m rule --add app="^Reminders" layer=above manage=off
+yabai -m rule --add label=system-prefs app="^System Preferences$" layer=above manage=off
+yabai -m rule --add label=renoise-above app="^Renoise$" layer=above manage=off
+yabai -m rule --add label=renoise-normal-xrns app="^Renoise$" title=".xrns$" layer=normal manage=off
+yabai -m rule --add label=renoise-normal-init app="^Renoise$" title="^Renoise" layer=normal manage=off
+yabai -m rule --add label=gimp app="^GIMP" layer=normal manage=off
+yabai -m rule --add label=reminders app="^Reminders" layer=above manage=off
+yabai -m rule --add label=live-export app="^Live$" title="Export" manage=off
+yabai -m rule --add label=electron-specs app="^Electron$" manage=off
+yabai -m rule --add label=processing-runner app="^Runner$" manage=off
+yabai -m rule --add label=tk-runner app="^Python$" manage=off
 
-yabai -m rule --add app="^Live$" manage=off
+# yabai -m rule --add app="^Live$" manage=off
 
 yabai -m rule --add title="Preferences" layer=above manage=off
 

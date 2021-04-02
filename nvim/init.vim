@@ -19,14 +19,22 @@ cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 
+let g:ruby_indent_assignment_style = 'variable'
+let g:ruby_indent_block_style = 'expression'
+let g:ruby_indent_access_modifier_style = 'outdent'
+
 let g:ack_autoclose = 1
 " option for the Suda plugin, allowing you to open files
 " in "sudo mode", which prompts you for a password before
 " saving
 let g:suda_startup = 1
 
+let g:sort_motion_flags = 'in'
+
 " for the CtrlP plugin, which is a fuzzy file finder
 let g:ctrlp_working_path_mode = '0'
+
+let g:jsx_ext_required = 0
 
 augroup FiletypeBehavior
   au BufRead,BufNewFile gitconfig set filetype=gitconfig
@@ -156,8 +164,8 @@ noremap <Leader>gd :Gdiff<cr>
 noremap <Leader>ga :!git add %<cr>
 
 " >> sudo (using the Suda plugin)
-noremap <silent> <Leader>se :noh<cr>:e suda://%<cr>
-noremap <silent> <Leader>sfs :noh<cr>:w suda://%<cr>
+" noremap <silent> <Leader>se :noh<cr>:e suda://%<cr>
+" noremap <silent> <Leader>sfs :noh<cr>:w suda://%<cr>
 
 " >> files
 " open cwd in the file explorer
@@ -196,6 +204,7 @@ noremap <silent> <Leader><Tab> <C-^>
 " next and prev files for if you did vim f1 f2 f3 ...
 noremap <silent> <Leader>fn :wn<cr>
 noremap <silent> <Leader>fp :wN<cr>
+noremap <silent> <Leader>ft :exec 'edit' '/tmp/nvim/' . nr2char(getchar())<cr>
 
 " >> buffers
 noremap <silent> <Leader>bb :CtrlPBuffer<cr>
@@ -244,6 +253,11 @@ noremap <silent> <Leader>dd :Ack '(^\s*(def\|module\|class)\s+(\w+\.)?<cword>\b\
 
 " >> ctags
 noremap <silent> <Leader>ct :tag<cr>
+
+" >> debug "view" things
+noremap <Leader>vh :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " >> terminals (s = 'shell')
 " opens terminals in specified locations
@@ -344,3 +358,8 @@ augroup END
 " endw
 " set timeout ttimeoutlen=3
 " end hack
+
+" TODO is this too much? it's not available here lol
+augroup JneenEditorConfig
+  autocmd BufEnter * EditorConfigEnable
+augroup END

@@ -2,16 +2,13 @@
 export SRC_DIR="$HOME/src"
 
 src() {
-  local multiplexer name pre_command
+  local multiplexer name
 
   while [[ $# -gt 0 ]]; do
     local opt="$1"; shift
 
     case "$opt" in
-      -t) multiplexer=t ;;
-      -e) multiplexer=e ;;
-      -m) multiplexer="$1"; shift ;;
-      -c) pre_command="$1"; shift ;;
+      -e) edit=e ;;
       *)  name="$opt" ;;
     esac
   done
@@ -29,9 +26,8 @@ src() {
     cd "$dir"
     if [[ -n "$dir" ]]; then
       [[ -n "$pre_command" ]] && eval "$pre_command"
-      echo -ne "\033]0;[$(basename "$dir")]\007"
-      if [[ -n "$multiplexer" ]]; then
-        SESSION="$(basename "$dir")" $multiplexer
+      if [[ -n "$edit" ]]; then
+        SESSION="$(basename "$dir")" o .
       else
         ls
       fi
@@ -59,7 +55,3 @@ __complete_src () {
 }
 
 complete -F __complete_src src
-
-work() {
-  src && screen
-}
