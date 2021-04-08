@@ -16,10 +16,6 @@ nb() { wifi connect "$@" && x br ;}
 wpa() { sudo wpa_cli "$@" ;}
 wifi() { sudo /usr/local/bin/wifi "$@" ;}
 
-sys() { sudo systemctl "$@" ;}
-_completion_loader systemctl
-complete -F _systemctl sys
-
 jc() { sudo journalctl "$@" ;}
 
 _complete_n() {

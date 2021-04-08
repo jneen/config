@@ -1,5 +1,7 @@
 #!/bin/bash
 
+is-local || return 0
+
 oc-production() {
   heroku run rails console -a opencounter-v2 -e DISABLE_DATADOG_AGENT=true
 }

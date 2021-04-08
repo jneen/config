@@ -1,5 +1,7 @@
 #!/bin/bash
 
+is-local || return 0
+
 is-linux && {
   renoise() {
     run_ chrt 10 renoise "$@"

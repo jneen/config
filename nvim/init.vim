@@ -360,6 +360,6 @@ augroup END
 " end hack
 
 " TODO is this too much? it's not available here lol
-augroup JneenEditorConfig
-  autocmd BufEnter * EditorConfigEnable
-augroup END
+" augroup JneenEditorConfig
+"   autocmd BufEnter * EditorConfigEnable
+" augroup END
