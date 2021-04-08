@@ -9,8 +9,8 @@ is-interactive && {
   DIR="$(__c '1;34')"
 
   if is-local
-  then PROMPT="$(__c '1;32')"
-  else PROMPT="$(__c '1;35')"
+  then PROMPT="$(__c '1;32')"; PROMPT_OPEN='['; PROMPT_CLOSE=']'
+  else PROMPT="$(__c '1;35')"; PROMPT_OPEN='{'; PROMPT_CLOSE='}'
   fi
 
   CLEAR="$(__c '0;38')"
@@ -18,7 +18,7 @@ is-interactive && {
   unset __c
 
   ps1() {
-    echo "\n$ERR{\$?:$PROMPT \u@\h $DIR\W $ERR}\$(ps1::git) \\$ $CLEAR\n; "
+    echo "\n$ERR$PROMPT_OPEN\$?:$PROMPT \u@\h $DIR\W $ERR$PROMPT_CLOSE\$(ps1::git) \\$ $CLEAR\n; "
   }
 
   ps1::isgit() {
