@@ -10,7 +10,8 @@
 	# fancy with auto-converting windows line endings.
 	autocrlf = input
 [init]
-  templatedir = ~/.git_template
+	templatedir = /usr/local/share/git-core/templates
+	defaultBranch = main
 [url "git@github.com:"]
 	insteadOf = gh:
 [url "git@gitlab.com:"]
@@ -96,7 +97,7 @@
 	# fancy log
 	lg = log --decorate --graph --date=relative
 	# fancy "big-picture" log
-	l  = log --decorate --graph --date=relative --oneline
+	l = log --decorate --graph --date=relative --oneline
 
 	# i don't know why this isn't called ls
 	ls = ls-files

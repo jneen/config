@@ -22,6 +22,8 @@ cnoreabbrev AG Ack
 let g:ruby_indent_assignment_style = 'variable'
 let g:ruby_indent_block_style = 'expression'
 let g:ruby_indent_access_modifier_style = 'outdent'
+let c_no_curly_error = 1
+let c_no_bracket_error = 1
 
 let g:ack_autoclose = 1
 " option for the Suda plugin, allowing you to open files

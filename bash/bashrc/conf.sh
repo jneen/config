@@ -183,9 +183,9 @@ bootstrap-mac() {
     $prefix defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
     $prefix defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
     $prefix defaults write com.apple.commerce AutoUpdate -bool true
-
-    sudo chflags nohidden /Volumes
-    sudo nvram StartupMute=%00
-    sudo spctl --master-disable
   done
+
+  sudo chflags nohidden /Volumes
+  sudo nvram StartupMute=%00
+  sudo spctl --master-disable
 }

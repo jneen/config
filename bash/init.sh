@@ -5,6 +5,12 @@ shopt -s globstar
 # bash escaping sucks
 TAB="$(echo -ne '\t')"
 
+# # [jneen] turn on for very verbose debugging
+# export() {
+#   echo builtin export "$@" >&2
+#   builtin export $@
+# }
+
 case "$(uname -s)" in
   Darwin*) CONF_MODE=mac ;;
   Linux*) CONF_MODE=linux ;;

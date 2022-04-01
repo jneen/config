@@ -24,6 +24,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " ~*~ ft-specific plugins ~*~
 
+" polyglot
+" Plug 'sheerun/vim-polyglot'
+
 " js
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
@@ -36,7 +39,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'digitaltoad/vim-pug'
 
 " ruby
-Plug 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-bundler'
 
 " clojure
@@ -48,6 +51,11 @@ Plug 'tpope/vim-leiningen'
 
 " markdown
 Plug 'tpope/vim-markdown'
+
+" godot
+Plug 'habamax/vim-godot'
+
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " supercollider
 " Plug 'sbl/scvim'
@@ -66,7 +74,12 @@ Plug 'tpope/vim-markdown'
 " Plug 'tulip-lang/tulip', { 'rtp': 'vim/' }
 " Plug '~/src/tulip/vim'
 
+" glsl
+Plug 'tikhomirov/vim-glsl'
+
 " theme
 Plug 'jneen/thankful_eyes.vim'
+
+" Plug 'bfrg/vim-cpp-modern'
 
 call plug#end()

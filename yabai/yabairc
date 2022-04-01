@@ -49,6 +49,8 @@ yabai -m rule --add label=live-export app="^Live$" title="Export" manage=off
 yabai -m rule --add label=electron-specs app="^Electron$" manage=off
 yabai -m rule --add label=processing-runner app="^Runner$" manage=off
 yabai -m rule --add label=tk-runner app="^Python$" manage=off
+yabai -m rule --add label=demo title="^Demo$" manage=off
+yabai -m rule --add label=iina app="^IINA$" manage=off
 
 # yabai -m rule --add app="^Live$" manage=off
 
