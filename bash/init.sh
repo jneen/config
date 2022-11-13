@@ -2,6 +2,10 @@
 
 shopt -s globstar
 
+# for fucks sake
+fgrep() { grep -F "$@"; }
+egrep() { grep -E "$@"; }
+
 # bash escaping sucks
 TAB="$(echo -ne '\t')"
 
@@ -43,7 +47,7 @@ listdel() {
   local var_name="$1"; shift
 
   for p in "$@"; do
-    export "$var_name"="$(tr : "\n" <<<"${!var_name}" | fgrep -vx "$p" | tr "\n" :)"
+    export "$var_name"="$(tr : "\n" <<<"${!var_name}" | grep -F -vx "$p" | tr "\n" :)"
   done
 
   # chomp off the last :
