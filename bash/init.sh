@@ -22,6 +22,8 @@ is-linux() { [[ "$CONF_MODE" = linux ]] ;}
 is-remote() { [[ -n "$SSH_CLIENT" ]] ;}
 is-local() { [[ -z "$SSH_CLIENT" ]] ;}
 
+is-mac && HOMEBREW_PREFIX=/opt/homebrew
+
 __complete_files() {
   local dir="$1"; shift
   local ext="$1"; shift
@@ -76,6 +78,7 @@ exists() {
 }
 
 pathshift /usr/local/bin
+is-mac && pathshift "$HOMEBREW_PREFIX"/bin
 pathshift $HOME/.local/bin
 
 # execute a command with no output
@@ -106,7 +109,7 @@ if is-linux; then
   done
 elif is-mac; then
   echo
-  . /usr/local/etc/profile.d/bash_completion.sh
+  . "$HOMEBREW_PREFIX"/etc/profile.d/bash_completion.sh
 fi
 
 for f in "$HOME"/.config/bash/bashrc/*.sh; do

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-is-mac && POLYPHONE=/Applications/polyphone-2.2.app/Contents/MacOS/polyphone
+is-mac && POLYPHONE=/Applications/polyphone.app/Contents/MacOS/polyphone
 
 [[ -n "$POLYPHONE" ]] && {
   polyphone() {

@@ -14,6 +14,7 @@ set shell=$SHELL\ -il
 " :Ack some.*pattern
 " see also the <Leader>s keyboard shortcuts
 let g:ackprg = 'ag --vimgrep --smart-case'
+" let g:eunuch_no_maps = 1
 cnoreabbrev ag Ack
 cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
@@ -335,7 +336,8 @@ noremap <LocalLeader>feR :so ./.init.vim<cr>
 
 " nvim specific
 augroup TermBehavior
-  autocmd BufEnter,TermOpen term://* startinsert | set bufhidden=delete
+  autocmd BufEnter,TermOpen term://* startinsert
+  autocmd TermOpen term://* set bufhidden=delete
   autocmd TermClose * call feedkeys('<cr>')
 augroup END
 

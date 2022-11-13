@@ -1,6 +1,6 @@
 [core]
 	# this is my editor.  replace with your editor of choice.
-  editor = ~/.config/nvim/editor.sh
+	editor = ~/.config/nvim/editor.sh --wait
 
 	# set up the global gitignore
 	# (mine has vim swap files, /tmp, etc)
@@ -10,7 +10,7 @@
 	# fancy with auto-converting windows line endings.
 	autocrlf = input
 [init]
-	templatedir = /usr/local/share/git-core/templates
+	templatedir = /opt/homebrew/share/git-core/templates
 	defaultBranch = main
 [url "git@github.com:"]
 	insteadOf = gh:
@@ -111,3 +111,8 @@
 	show-old = "!_() { git show :1:\"$1\"; }; _"
 	show-new = "!_() { git show :3:\"$1\"; }; _"
 	show-mine = "!_() { git show :2:\"$1\"; }; _"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

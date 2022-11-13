@@ -4,6 +4,10 @@ is-local || return 0
 is-linux && MOUNT_PREFIX=/mnt
 is-mac && MOUNT_PREFIX=$HOME/mnt
 
+fix-macfuse() {
+  sudo kextunload -b io.macfuse.filesystems.macfuse
+}
+
 mount-sshfs() {
   local name="$1"; shift
   local ssh_path="$1"; shift
@@ -33,21 +37,42 @@ mount-backup() {
 
   [[ -d $MOUNT_PREFIX/nas/backups ]] || mount-nas
   mkdir -p $MOUNT_PREFIX/"$fname"
-  squashfuse $MOUNT_PREFIX/nas/backups/"$fname".squashfs $MOUNT_PREFIX/"$fname" -o allow_other -o volname="$fname"
+  mount-squash "$MOUNT_PREFIX/nas/backups/$fname.squashfs" "$fname"
+}
+
+mount-squash() {
+  local fname="$1"; shift
+  local name="$1"; shift
+
+  [[ -z "$name" ]] && {
+    name="${fname##*/}"
+    name="${name%.*}"
+  }
+
+  execd squashfuse "$fname" "$MOUNT_PREFIX/$name" -o allow_other -o volname="$name" "$@"
 }
 
 mount-guanyin() {
   mount-sshfs guanyin guanyin:/var/public
 }
 
-umount-nas-all() {
+umount-all() {
   echo pass
 }
 
 is-mac && {
-  umount-nas-all() {
+  umount-all() {
     for f in "$MOUNT_PREFIX"/*; do
       diskutil unmount force "$f"
     done
+
+    diskutil unmount force /Volumes/qvo
   }
 }
+
+um() { umount-all "$@"; }
+
+cinnamon() {
+  mount-squash ~/tmp/cinnamon.squashfs
+}
+

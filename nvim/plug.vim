@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.config/nvim/bundle')
 
 Plug 'ap/vim-css-color'
 " editorconfig for shared projects

@@ -17,3 +17,6 @@
 
 # node_modules
 /node_modules
+
+# python virtualenv
+/.venv

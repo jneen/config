@@ -22,7 +22,7 @@ __complete_vb() { __complete_files $HOME/.config/bash/bashrc .sh; }
 is-interactive && complete -F __complete_vb vb vibashrc
 
 if is-linux; then export SHELL=/usr/bin/bash
-elif is-mac; then export SHELL=/usr/local/bin/bash
+elif is-mac; then export SHELL=/opt/homebrew/bin/bash
 fi
 
 shell() { exec "$SHELL" "$@"; }

@@ -1,5 +1,5 @@
 is-mac && {
-  POSTGRES_PREFIX=/usr/local/var/postgres
+  POSTGRES_PREFIX="$HOMEBREW_PREFIX/var/postgres"
 }
 
 exists pg_ctl && [[ -n "$POSTGRES_PREFIX" ]] && {
@@ -8,7 +8,7 @@ exists pg_ctl && [[ -n "$POSTGRES_PREFIX" ]] && {
   }
 
   pg-console() {
-    psql -D "$POSTGRES_PREFIX" "$@"
+    psql
   }
 
   pg-restore() {

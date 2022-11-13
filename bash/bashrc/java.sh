@@ -1,5 +1,6 @@
 #!/bin/bash
 
 is-mac && {
-  export JAVA_HOME="$(/usr/libexec/java_home -v15)"
+  export JAVA_HOME="$HOMEBREW_PREFIX/Cellar/openjdk/18"
+  pathshift "$JAVA_HOME/bin"
 }
